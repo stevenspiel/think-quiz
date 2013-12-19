@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Think Type Quiz</title>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://underscorejs.org/underscore-min.js"></script>
+	<script src="think.js"></script>
+	<script src="question_data.js"></script>
+	<script>$(function() { Think.initialize() });</script>
+</head>
+<body>
+	<header>Take the Quiz</header>
+	<div class="progress-bar" style="display: none;"></div>
+	<h2>Read each set of words and mark the TWO within each set that best describe you</h2>
+	<section class="buttons"></section>
+	<section class="results" style="display: none;">
+	</section>
+	<section class="navigation">
+		<button class="back">Back</button>
+		<button class="forward" id="next">Next</button>
+	</section>
+</body>
+</html>
