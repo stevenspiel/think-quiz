@@ -42,7 +42,7 @@ window.Think = _.extend(window.Think, {
         var questionNumber = 0;
         questionNumber++;
         var instructions = "Read each set of words and mark the TWO within each set that best describe you.<br/>";
-        var nextButton = '<input type="submit" value="next" onclick="alert()"/>'; // changing to onclick="transition()" doesn't work
+        var nextButton = '<input type="submit" value="next"/>'; // changing to onclick="transition()" doesn't work
         var nextButtonHidden = '<input type="submit" value="next" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>'; //want to hide nextButton until 2 selections made
         if (questionNumber === 1) { //Starting page
             document.write('<h1>Take the Quiz</h1>');
@@ -77,30 +77,44 @@ window.Think = _.extend(window.Think, {
         document.addEventListener('change',function(e){
           if(e.target.checked){
             thinkObject.optionCounter += 1;
-            if (thinkObject.optionCounter > 2) {
-              alert("Please select only 2 qualities");
-              e.target.checked = false;
-              thinkObject.optionCounter -= 1;
+            if (thinkObject.optionCounter === 2){
+              document.getElementById('next').disabled = false;
+            } else if (thinkObject.optionCounter !== 2){
+              document.getElementById('next').disabled = true;
             }
           } else {
             thinkObject.optionCounter -= 1;
+            if (thinkObject.optionCounter === 2){
+              document.getElementById('next').disabled = false;
+            } else if (thinkObject.optionCounter !== 2){
+              document.getElementById('next').disabled = true;
+            }
           }
-          console.log(thinkObject.optionCounter);
         });
         document.getElementById('next').addEventListener('click', function() {
-            if (thinkObject.optionCounter < 2){
-              alert("Please Choose 2 Qualities");
+            if (thinkObject.currentQuestionNumber === Think.questions.length-1){
+              thinkObject.showResults(thinkObject.answersArray);
             } else if (thinkObject.optionCounter === 2){
               thinkObject.updateQuestionNumber("forward");
               thinkObject.showCurrentQuestion();
               thinkObject.optionCounter = 0;
-            } 
-        });
+              document.getElementById('back').disabled = false;
+              document.getElementById('next').disabled = true;
+            }
+          thinkObject.addAnswersToArray();
+          console.log(Think.questions.length - thinkObject.currentQuestionNumber + " questions left");
+        }); 
         document.getElementById('back').addEventListener('click', function() {
             thinkObject.updateQuestionNumber("back");
             thinkObject.showCurrentQuestion();
             thinkObject.optionCounter = 0;
         });   
+    },
+    showResults: function(){
+      // display final results
+    },
+    addAnswersToArray: function(){
+      // add input from checkboxes to array for anayzing later
     }
 });
 
