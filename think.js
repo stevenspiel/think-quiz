@@ -6,6 +6,10 @@ window.Think = _.extend(window.Think, {
         this.setUpEvents();
         this.showCurrentQuestion();
         this.listener();
+        this.answersArray = [];
+        this.answerSet = [];
+        this.totals = {};
+        this.count = 0;
     },
     setUpEvents: function() {},
     showCurrentQuestion: function() {
@@ -38,33 +42,33 @@ window.Think = _.extend(window.Think, {
             document.write('<div id="' + questionNumber + '"><input type="checkbox" name="' + questionNumber + '.' + (i + 1) + '" value="' + valuesArray[i] + '" onclick="count(1)"/>' + characteristicsArray[i] + '</div><br/>'); //count is not defined?
         }
     },
-    form: function(characteristicsArray, valuesArray) { //print form
-        var questionNumber = 0;
-        questionNumber++;
-        var instructions = "Read each set of words and mark the TWO within each set that best describe you.<br/>";
-        var nextButton = '<input type="submit" value="next"/>'; // changing to onclick="transition()" doesn't work
-        var nextButtonHidden = '<input type="submit" value="next" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>'; //want to hide nextButton until 2 selections made
-        if (questionNumber === 1) { //Starting page
-            document.write('<h1>Take the Quiz</h1>');
-            document.write("<form>");
-            document.write(instructions);
-        } else { // in-between pages
-            document.write('--progress bar--');
-            document.write(instructions);
-        }
-        document.write(checkbox(characteristicsArray, valuesArray, questionNumber));
-        if (questionNumber === 15) { //last question's tail
-            document.write('</form>');
-            document.write('<button id="back">back</button>');
-            document.write(nextButton);
-            document.write('<button>finish</button>');
-        } else if (questionNumber === 1) { //first question's tail
-            document.write(nextButton);
-        } else { // middle questions' tail
-            document.write('<button id="back">back</button>');
-            document.write(nextButton);
-        }
-    },
+    // form: function(characteristicsArray, valuesArray) { //print form
+    //     var questionNumber = 0;
+    //     questionNumber++;
+    //     var instructions = "Read each set of words and mark the TWO within each set that best describe you.<br/>";
+    //     var nextButton = '<input type="submit" value="next"/>'; // changing to onclick="transition()" doesn't work
+    //     var nextButtonHidden = '<input type="submit" value="next" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>'; //want to hide nextButton until 2 selections made
+    //     if (questionNumber === 1) { //Starting page
+    //         document.write('<h1>Take the Quiz</h1>');
+    //         document.write("<form>");
+    //         document.write(instructions);
+    //     } else { // in-between pages
+    //         document.write('--progress bar--');
+    //         document.write(instructions);
+    //     }
+    //     document.write(checkbox(characteristicsArray, valuesArray, questionNumber));
+    //     if (questionNumber === 15) { //last question's tail
+    //         document.write('</form>');
+    //         document.write('<button id="back">back</button>');
+    //         document.write(nextButton);
+    //         document.write('<button>finish</button>');
+    //     } else if (questionNumber === 1) { //first question's tail
+    //         document.write(nextButton);
+    //     } else { // middle questions' tail
+    //         document.write('<button id="back">back</button>');
+    //         document.write(nextButton);
+    //     }
+    // },
     updateQuestionNumber: function(direction) {
         if(direction === "forward"){
             this.currentQuestionNumber += 1;
@@ -82,6 +86,7 @@ window.Think = _.extend(window.Think, {
             } else if (thinkObject.optionCounter !== 2){
               document.getElementById('next').disabled = true;
             }
+            thinkObject.answerSet.push(e.target.value);
           } else {
             thinkObject.optionCounter -= 1;
             if (thinkObject.optionCounter === 2){
@@ -89,10 +94,13 @@ window.Think = _.extend(window.Think, {
             } else if (thinkObject.optionCounter !== 2){
               document.getElementById('next').disabled = true;
             }
+            thinkObject.answerSet = _.without(thinkObject.answerSet, e.target.value);
           }
         });
         document.getElementById('next').addEventListener('click', function() {
             if (thinkObject.currentQuestionNumber === Think.questions.length-1){
+              thinkObject.addAnswersToArray(thinkObject.answerSet);
+              thinkObject.answerSet = []
               thinkObject.showResults(thinkObject.answersArray);
             } else if (thinkObject.optionCounter === 2){
               thinkObject.updateQuestionNumber("forward");
@@ -100,31 +108,41 @@ window.Think = _.extend(window.Think, {
               thinkObject.optionCounter = 0;
               document.getElementById('back').disabled = false;
               document.getElementById('next').disabled = true;
+              thinkObject.addAnswersToArray(thinkObject.answerSet);
+              thinkObject.answerSet = []
             }
-          thinkObject.addAnswersToArray();
           console.log(Think.questions.length - thinkObject.currentQuestionNumber + " questions left");
         }); 
         document.getElementById('back').addEventListener('click', function() {
             thinkObject.updateQuestionNumber("back");
             thinkObject.showCurrentQuestion();
             thinkObject.optionCounter = 0;
+            if (thinkObject.currentQuestionNumber === 0){
+              document.getElementById('back').disabled = true;
+            }
         });   
     },
     showResults: function(){
-      // display final results
+      var thinkObject = this;
+      var letters = ["CS","AS","AR","CR"];
+      var flatArray = [].concat.apply([],this.answersArray);
+      for (var letter in letters){
+          thinkObject.sumArrayTypes(letters[letter],flatArray);
+          thinkObject.totals[letters[letter]] = thinkObject.count;
+          thinkObject.count = 0;
+      }
+      console.log(this.totals);
     },
-    addAnswersToArray: function(){
-      // add input from checkboxes to array for anayzing later
+    addAnswersToArray: function(answerSet){
+      this.answersArray.push(answerSet);
+    },
+    sumArrayTypes: function(x,array) {
+      var thinkObject = this;
+      for (var answer in array){
+        if(array[answer] === x){
+          thinkObject.count++;
+        }
+      }
     }
 });
 
-// grid = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-// grid[1][0]
-// for (var row = 0; row < row_size; row++) {
-//   for (var col = 0; col < col_size; col++) {
-//     // checkForHoriz
-//     // checkForVertical
-//     // checkForDiagonal
-//     if (grid[row][col] == grid[row+1][col+1] && grid[row][col] == grid[row+2][col+2])
-//   }
-// }
