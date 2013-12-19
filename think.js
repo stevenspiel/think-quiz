@@ -2,8 +2,10 @@ window.Think = window.Think || {}
 window.Think = _.extend(window.Think, {
   initialize: function() {
     this.currentQuestionNumber = 0;
+    this.optionCounter = 0;
     this.setUpEvents();
     this.showCurrentQuestion();
+    this.listener();
   },
   setUpEvents: function() {},
   showCurrentQuestion: function() {
@@ -18,16 +20,15 @@ window.Think = _.extend(window.Think, {
   currentQuestion: function() {
     return this.questions[this.currentQuestionNumber];
   },
-
-  count: function(number) { //limit checkbox selections to 2
-    var currentCount = number + 1;
-    if (currentCount === 2) { //show next button when two is reached
-      document.getElementById(questionNumber).style.position="relative";
-      document.getElementById(questionNumber).style.left="0px";
-    } else if (currentCount > 2) { // alert if 3 are chosen
-      alert("only select two words");
-    }
-  },
+  // count: function(number) { //limit checkbox selections to 2
+  //   var currentCount = number + 1;
+  //   if (currentCount === 2) { //show next button when two is reached
+  //     document.getElementById(questionNumber).style.position="relative";
+  //     document.getElementById(questionNumber).style.left="0px";
+  //   } else if (currentCount > 2) { // alert if 3 are chosen
+  //     alert("only select two words");
+  //   }
+  // },
   transition: function() {
     alert();
     // fading or sliding transition instead of alert
@@ -63,6 +64,20 @@ window.Think = _.extend(window.Think, {
       document.write('<button id="back">back</button>');
       document.write(nextButton);
     }
+  },
+  updateOptionCounter: function(){
+    this.optionCounter += 1
+  },
+  updateQuestionNumber: function(){
+    this.currentQuestionNumber += 1;
+  },
+  listener: function(){
+      var thinkObject = this;
+      document.getElementById('next').addEventListener('click', function(){
+        if()
+        thinkObject.updateQuestionNumber();
+        thinkObject.showCurrentQuestion();
+      });
   }
 });
 
