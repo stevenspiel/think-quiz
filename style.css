@@ -1,0 +1,37 @@
+body{
+	width:100%;
+}
+#personal-thinking-style {
+	width:368px;
+}
+
+#personal-thinking-style span.test-instructions {
+	display: block;
+	font-weight: bold;
+}
+
+#personal-thinking-style .buttons {
+	display: block;
+	padding:20px 0;
+}
+
+#personal-thinking-style .buttons label {
+	cursor: pointer;
+}
+
+.option-selected {
+	font-weight: bold;
+}
+
+.option-not-selected {
+	font-weight: normal;
+}
+
+.individual-checkbox {
+	display: none;
+}
+
+.checkbox-label-disabled {
+	font-weight: normal;
+	color:#aaaaaa;
+}
