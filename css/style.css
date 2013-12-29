@@ -1,0 +1,63 @@
+body {
+    height: 100%;
+    margin: 0;
+    position: fixed;
+    width: 100%;
+}
+
+#personal-thinking-style {
+    border-left: 1px solid;
+    border-right: 1px solid;
+    height: 100%;
+    margin: auto;
+    width: 368px;
+}
+
+#personal-thinking-style span.test-instructions {
+	display: block;
+	font-weight: bold;
+	padding: 10px;
+}
+
+#personal-thinking-style .type-options {
+	display: block;
+	padding:20px 10px;
+}
+
+#personal-thinking-style .type-options label {
+	cursor: pointer;
+}
+
+.option-selected {
+	font-weight: bold;
+}
+
+.option-not-selected {
+	font-weight: normal;
+}
+
+.individual-checkbox {
+	display: none;
+}
+
+.checkbox-label-disabled {
+	font-weight: normal;
+	color:#aaaaaa;
+}
+
+#navigation {
+	padding:0 10px 10px 10px;
+}
+
+.results {
+    display: none;
+    height: 280px;
+    left: -5px;
+    position: relative;
+    width: 368px;
+}
+
+#share {
+	text-align: center;
+	display:none;
+}
