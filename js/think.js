@@ -17,23 +17,19 @@ window.Think = _.extend(window.Think, {
     },
     renderProgressBarSVG: function(){
         var increment = 18.733;
-        // var initialWidth = 12.89693;
         var fillColor = "#FF8080";
         var incrementedWidth = (increment * (this.currentQuestionNumber));
         var startSVG = '<svg width="368" height="50" xmlns="http://www.w3.org/2000/svg"><g><title>Progress Bar</title>';
-        var firstProgressFill = '<rect stroke="#000000" id="svg_2" height="17.07409" width="'+incrementedWidth+'" y="16.425" x="52.53886" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" fill="'+fillColor+'"/>\
+        var isFirstQuestion = (this.currentQuestionNumber === 0);
+        if (isFirstQuestion){
+            progressFill = '';
+        } else {
+            progressFill = '<rect stroke="#000000" id="svg_2" height="17.07409" width="'+incrementedWidth+'" y="16.425" x="52.53886" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" fill="'+fillColor+'"/>\
             <rect transform="rotate(-90 52.5737 24.8987)" fill="'+fillColor+'" stroke-width="null" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="44.53199" ry="5" rx="5" y="21.12343" width="16.08341" height="7.55047" id="svg_4" stroke="'+fillColor+'"/>';
+        }
         var progressOutline = '<rect fill="none" stroke="#000000" ry="5" rx="5" x="48" y="16" width="272" height="18" id="svg_1"/>';
         var endSVG = '</g></svg>';
-        var blankProgressBar = startSVG + progressOutline + endSVG; 
-        var incrementedProgressBar = startSVG + firstProgressFill + progressOutline + endSVG;
-        var isFirstQuestion = (this.currentQuestionNumber === 0);
-        var isLastQuestion = (this.currentQuestionNumber === this.numberOfQuestions);
-        if (isFirstQuestion){
-            var progressBarSVG = blankProgressBar;
-        } else {
-            var progressBarSVG = incrementedProgressBar;
-        }
+        var progressBarSVG = startSVG + progressFill + progressOutline + endSVG;
         return progressBarSVG;
     },
     displayProgressBar: function(){
