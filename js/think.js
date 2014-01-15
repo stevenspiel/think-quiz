@@ -1,10 +1,10 @@
-window.Think = window.Think || {}
+window.Think = window.Think || {};
 window.Think = _.extend(window.Think, {
     initialize: function() {
         this.currentQuestionNumber = 0;
         this.answersArray = [];
         this.finalResults = {AS: 0, CS: 0, CR: 0, AR: 0};
-        this.count = 0; 
+        this.count = 0;
         this.currentlySelected = [];
         this.currentlyNotSelected = [this.currentQuestionNumber + "CS",this.currentQuestionNumber + "AS", this.currentQuestionNumber + "AR", this.currentQuestionNumber + "CR"];
         this.goingBack = 0;
@@ -40,9 +40,9 @@ window.Think = _.extend(window.Think, {
         var buttonHtml = "";
         for (var i in question.answers) {
             var answer = question.answers[i];
-            var id = this.currentQuestionNumber + answer.category
+            var id = this.currentQuestionNumber + answer.category;
             buttonHtml = buttonHtml + "<label for='" + id + "'><input type='checkbox' id='" + id + "'class='individual-checkbox' value='" + answer.category + "'>" + answer.name + "</label><br>";
-        };
+        }
         $('.type-options').html(buttonHtml);
         if (this.currentQuestionNumber === this.numberOfQuestions){
             document.getElementById('next').innerHTML = "Submit";
@@ -118,7 +118,7 @@ window.Think = _.extend(window.Think, {
             this.showCurrentQuestion();
             document.getElementById('back').disabled = false;
             document.getElementById('next').disabled = true;
-            this.addAnswersToArray(this.currentlySelected);        
+            this.addAnswersToArray(this.currentlySelected);
             this.reset();
         }
     },
@@ -137,7 +137,7 @@ window.Think = _.extend(window.Think, {
         this.answersArray.push(selected);
     },
     totalResults: function() {
-        var flatAnswersArray = [].concat.apply([],this.answersArray)
+        var flatAnswersArray = [].concat.apply([],this.answersArray);
         this.sumArrayTypes(flatAnswersArray);
         return console.log(this.finalResults);
     },
@@ -157,7 +157,7 @@ window.Think = _.extend(window.Think, {
         var rightAS = this.finalResults["AS"] * 4;
         var bottomAR = this.finalResults["AR"] * 4;
         var leftCR = this.finalResults["CR"] * 4;
-        var gridSVG = 
+        var gridSVG =
             '<rect height="215" width="217" y="32.5" x="75.5" stroke-width="2" fill="none" stroke="#000000"/>\
             <line y2="32.68382" x2="184" y1="247.31618" x1="184" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" fill="none" stroke="#000000"/>\
             <line y2="140" x2="292.27206" y1="140" x1="75.72794" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" fill="none" stroke="#000000"/>\
@@ -167,13 +167,13 @@ window.Think = _.extend(window.Think, {
             <text fill="#000000" stroke="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="326.6732" y="138.69159" font-size="12" font-family="Sans-serif" text-anchor="middle" xml:space="preserve">Abstract</text>\
             <text fill="#000000" stroke="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="326.6741" y="150.84113" font-size="12" font-family="Sans-serif" text-anchor="middle" xml:space="preserve">Sequential</text>\
             <text fill="#000000" stroke="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="183.9995" y="263.30219" font-size="12" font-family="Sans-serif" text-anchor="middle" xml:space="preserve">Abstract Random</text>';
-        var diamondSVG = 
+        var diamondSVG =
             '<polygon fill="red" stroke="black" opacity="0.5" points="\
             '+centerX+','+(centerY + (increment * topCS))+' \
             '+(centerX + (increment * rightAS))+','+centerY+' \
             '+centerX+','+(centerY - (increment * bottomAR))+' \
             '+(centerX - (increment * leftCR))+','+centerY+'"';
-        var gridAndDiamondSVG = 
+        var gridAndDiamondSVG =
             '<svg width="'+backgroundWidth+'" height="'+backgroundHeight+'">\
                 <g>\
                     <title>Graph</title>\
@@ -193,7 +193,7 @@ window.Think = _.extend(window.Think, {
         document.getElementById('navigation').innerHTML = '';
         document.getElementById('results').style.display = 'block';
         document.getElementById('results').innerHTML = this.renderResultsSVG();
-        document.getElementById('share').style.display = 'block';
+        // document.getElementById('share').style.display = 'block'; // displays share buttons to share the webpage.
     }
 });
 
