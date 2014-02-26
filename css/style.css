@@ -63,3 +63,18 @@ body {
 	text-align: center;
 	display:none;
 }
+
+/*FOR DEMOING PURPOSES*/
+
+#personal-thinking-style {
+  border-left: 192px solid #FFFFCC;
+  border-right: none;
+  background: #FFFFFF
+  /*width: auto;*/
+}
+
+body {
+  background: #666699
+}
+
+
