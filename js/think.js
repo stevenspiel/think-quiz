@@ -17,7 +17,7 @@ window.Think = _.extend(window.Think, {
     },
     renderProgressBarSVG: function(){
         var increment = 18.733;
-        var fillColor = "#FF8080";
+        var fillColor = "#ff8080";
         var incrementedWidth = (increment * (this.currentQuestionNumber));
         var startSVG = '<svg width="368" height="50" xmlns="http://www.w3.org/2000/svg"><g><title>Progress Bar</title>';
         var isFirstQuestion = (this.currentQuestionNumber === 0);
@@ -153,6 +153,7 @@ window.Think = _.extend(window.Think, {
         var centerX = backgroundWidth / 2;
         var centerY = backgroundHeight / 2;
         var increment = 1.78;
+        var fillColor = "#FF0000";
         var topCS = this.finalResults["CS"] * 4;
         var rightAS = this.finalResults["AS"] * 4;
         var bottomAR = this.finalResults["AR"] * 4;
@@ -168,7 +169,7 @@ window.Think = _.extend(window.Think, {
             <text fill="#000000" stroke="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="326.6741" y="150.84113" font-size="12" font-family="Sans-serif" text-anchor="middle" xml:space="preserve">Sequential</text>\
             <text fill="#000000" stroke="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="183.9995" y="263.30219" font-size="12" font-family="Sans-serif" text-anchor="middle" xml:space="preserve">Abstract Random</text>';
         var diamondSVG = 
-            '<polygon fill="red" stroke="black" opacity="0.5" points="\
+            '<polygon fill="'+fillColor+'" stroke="black" opacity="0.5" points="\
             '+centerX+','+(centerY + (increment * topCS))+' \
             '+(centerX + (increment * rightAS))+','+centerY+' \
             '+centerX+','+(centerY - (increment * bottomAR))+' \
